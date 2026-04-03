@@ -1,0 +1,96 @@
+/***\
+By SageMatthis/EgalLau37
+Modifies the checks of various EVBITs:
+Currently includes EVBIT 0x7 and EVBIT 0x9.
+Not sure why the defaults in FE8 are what they are, but this
+allows toggling the default behavior.
+
+Uncomment the desired effect and comment all others.
+Descriptions of the EVBITs are within their corresponding section.
+\***/
+
+//#define EVBIT7_default
+#define EVBIT7_invert	//must be toggled on to automatically fade
+//#define EVBIT7_always	//always fades, regardless of value
+//#define EVBIT7_never	//never fades, regardless of value
+
+//#define EVBIT9_default
+#define EVBIT9_invert	//must be toggled on to not follow units
+//#define EVBIT9_always	//always follows, regardless of value
+//#define EVBIT9_never	//never follows, regardless of value
+
+
+//---------------------------------------------------------------//
+
+/***\
+EVBIT ID 0x7
+Related to cutscene fading; if toggled on, the game automatically
+fades to dark after an event finishes.
+Default value is on (fade after event).
+This can be toggled to either invert or negate the flag.
+\***/
+
+
+#ifdef EVBIT7_invert
+ORG 0x592150
+BYTE 0x40
+#endif
+
+#ifdef EVBIT7_default
+ORG 0x592150
+BYTE 0x41
+#endif
+
+#ifdef EVBIT7_always
+ORG 0x592150
+BYTE 0x45
+#endif
+
+#ifdef EVBIT7_never
+ORG 0x592150
+BYTE 0x40
+ORG 0x592154
+BYTE 0xD
+#endif
+
+
+//---------------------------------------------------------------//
+
+/***\
+EVBIT ID 0x9
+Related to camera movement; if toggled on, the camera follows
+units as they move; the opposite behavior of default FE7.
+Default value is off (do not follow units).
+This can be toggled to either invert or negate the flag.
+\***/
+
+#ifdef EVBIT9_invert
+ORG 0xFCF0
+SHORT 0x01D1
+ORG 0xFCA2
+SHORT 0x0CD1
+#endif
+
+#ifdef EVBIT9_default
+ORG 0xFCF0
+SHORT 0x01D0
+ORG 0xFCA2
+SHORT 0x0CD0
+#endif
+
+#ifdef EVBIT9_always
+ORG 0xFCF0
+SHORT 0x1B1C
+ORG 0xFCA2
+SHORT 0x1B1C
+#endif
+
+#ifdef EVBIT9_never
+ORG 0xFCF0
+SHORT 0x01E0
+ORG 0xFCA2
+SHORT 0x0CE0
+#endif
+
+
+

@@ -1,0 +1,36 @@
+/***\
+By SageMatthis/EgalLau37
+FE8 version of per-affinity texts:
+Adds code that changes affinity description texts to
+instead read from a table instead of using a constant ID.
+
+The following should be changed:
+"PerAffinityTextAddress" to a freespace address
+The text IDs in the "PerAffinityTextsTable" table to affinity description text IDs
+The address "0xA00CF4" only if the status R-menu address for affinity has been moved, such as with SkillSystems.
+\***/
+
+#define PerAffinityTextAddress	0x9373788	//change to freespace
+
+PUSH
+//default location for affinity description getter, change if moved
+ORG 0xA00CF4
+POIN PerAffinityTextAddress+1
+
+ORG PerAffinityTextAddress
+#incbin Lau_FE8_PerAffinityTexts.bin
+WORD 0x2003BFC	//address of currently relevant unit, do not touch unless this has been changed
+POIN PerAffinityTextsTable
+
+//the table can be placed wherever, this is the table of text IDs for descriptions per affinity
+ALIGN 0x4
+PerAffinityTextsTable:
+SHORT 0x551	//default description
+SHORT 0x551	//fire
+SHORT 0x551	//thunder
+SHORT 0x551	//wind
+SHORT 0x551	//ice
+SHORT 0x551	//dark
+SHORT 0x551	//light
+SHORT 0x551	//anima
+POP
