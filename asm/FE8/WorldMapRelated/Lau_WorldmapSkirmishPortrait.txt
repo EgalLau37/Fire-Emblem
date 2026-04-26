@@ -1,0 +1,60 @@
+/***\
+By: EgalLau37/SageMatthis
+
+By default, class-determined units on the worldmap are
+hardcoded to use mini-portrait ID 0x4 (generally the
+monster skirmish units).  This changes that to determine
+the mini-portrait first based on node, then on class ID.
+If the portrait ID in the node table is 0xFF, the
+class-based mini-portrait table will be used instead.
+
+The vanilla behavior can be kept by commenting out nearly
+everything except the last couple lines for the hardcoded
+mini-portrait ID.
+
+No pre-requisites are required.
+No known conflicts with other patches.
+
+\***/
+
+//#define Freespace 0x9000000
+//ORG Freespace
+
+DetermineWorldmapSkirmishLeaderPortrait:
+#incbin "Lau_SkirmishLeaderMini_table.bin"
+POIN SkirmishNodeMiniTable
+POIN SkirmishClassMiniTable
+
+
+SkirmishNodeMiniTable:
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+SkirmishClassMiniTable:
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14
+BYTE 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0x14 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+BYTE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+
+PUSH
+ORG 0xBE974
+BYTE 0x00 0x48 0x87 0x46
+POIN DetermineWorldmapSkirmishLeaderPortrait+1
+
+ORG 0xBE998	//default hardcoded mini-portrait ID
+WORD 0x7F14
+
+POP

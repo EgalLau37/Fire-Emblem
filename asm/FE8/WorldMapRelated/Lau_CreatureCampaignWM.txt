@@ -1,0 +1,25 @@
+/***\
+By: EgalLau37/SageMatthis
+
+By default, the game is hardcoded to not play worldmap events
+if it is currently creature campaign. This changes it so that
+a specific worldmap event will always play upon re-entering the
+worldmap, such as from a skirmish or on creature campaign start.
+The default ID used is 0x3A, denoted below.
+Useful if events are used during creature campaign, such as
+for unlocking new nodes, adding characters, etc.
+
+No pre-requisites are required.
+No known conflicts with other patches.
+
+\***/
+
+PUSH
+ORG 0xBA34A
+BYTE 0x01 0x48 0x87 0x46 0x00 0x00
+POIN AllowCreatureCampaignWMEvents+1
+POP
+
+AllowCreatureCampaignWMEvents:
+#incbin "Lau_AllowCreatureCampaignWM.bin"
+WORD 0x3A	//worldmap event ID

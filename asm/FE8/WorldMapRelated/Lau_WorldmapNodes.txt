@@ -1,0 +1,199 @@
+/***\
+By: EgalLau37/SageMatthis
+
+By default, the game is hardcoded to only check for 0x1C
+worldmap nodes and 0x1F worldmap paths.  This increases these
+hardcoded values.
+The maximum nodes with this is "0x1C+0xC-1", but it can
+theoretically be increased more as long as sufficient space
+is allocated in RAM.
+The maximum paths with this is around ~0x30 or 0x40.
+
+Requires the ExpandedModularSave patch to save the additional
+nodes and paths properly.
+No known conflicts with other patches.
+
+\***/
+
+#define MaxQuantity_WorldMapNodes	0x1C+0xC-1
+#define MaxQuantity_WorldMapRoads	0x1F+0x8
+
+PUSH
+//worldmap node read/display/render
+//world map nodes at short instead of word
+ORG 0xBB7C8
+BYTE 0x79 0x00
+ORG 0xBB644
+BYTE 0x50 0x00
+
+ORG 0xBD036
+BYTE 0x02 0x32
+
+
+//save load
+ORG 0xA6E3C
+BYTE 0x40 0x00
+ORG 0xA6EA0
+BYTE MaxQuantity_WorldMapNodes
+//save nodes to save file?
+ORG 0xA6E14
+BYTE MaxQuantity_WorldMapNodes
+
+ORG 0xBC84C
+BYTE 0x2	//related to initialization
+
+ORG 0xC1D2	//unlock with WM_LOADLOCATION2
+BYTE 0x49
+
+ORG 0xA6DC6	//saving data
+BYTE 0x40
+
+ORG 0xBB896	//rendering
+BYTE MaxQuantity_WorldMapNodes
+
+ORG 0xBBA2A
+BYTE MaxQuantity_WorldMapNodes
+
+ORG 0xBEEB0	//related to monster read for minibox
+//BYTE 0x40
+
+ORG 0xBB6E2	//coord read?
+BYTE MaxQuantity_WorldMapNodes
+
+ORG 0xBD006	//
+BYTE MaxQuantity_WorldMapNodes
+
+//worldmap re-draw, paths
+ORG 0xBC990
+BYTE 0x80 0x30	//0xA4, first path offset
+BYTE 0xC4 0x34	//0xC4, current path quantity
+
+ORG 0xBC832
+BYTE 0x80	//0xA4
+//initializes worldmap path data
+ORG 0xBC8AA
+BYTE MaxQuantity_WorldMapRoads
+//loads worldmap path to RAM
+ORG 0xBC8C6
+BYTE MaxQuantity_WorldMapRoads
+//loads worldmap path to RAM
+ORG 0xA6F46
+BYTE MaxQuantity_WorldMapRoads
+//related to loading
+ORG 0xA6F3C
+BYTE 0x80	//0xA4
+ORG 0xBC8C2	//offset for number of roads
+BYTE 0x20+0x24
+ORG 0xBBCAA	//offset for number of roads
+BYTE 0x20+0x24
+
+//??
+ORG 0xA6ED4
+BYTE 0x80	//0xA4
+//unlock with WM_DRAWPATH2
+ORG 0xC16E 
+BYTE 0x80	//0xA4
+
+ORG 0xBAC18	//specific address
+WORD 0x3005324-0x24
+
+
+ORG 0xBE84
+POIN WorldMapNodeDataTable
+ORG 0xBED0
+POIN WorldMapNodeDataTable
+ORG 0xBF9C
+POIN WorldMapNodeDataTable
+ORG 0xC04C
+POIN WorldMapNodeDataTable
+ORG 0xCB44
+POIN WorldMapNodeDataTable
+ORG 0xB82DC
+POIN WorldMapNodeDataTable
+ORG 0xB9070
+POIN WorldMapNodeDataTable
+ORG 0xB9310
+POIN WorldMapNodeDataTable
+ORG 0xB93C8
+POIN WorldMapNodeDataTable
+ORG 0xB9618
+POIN WorldMapNodeDataTable
+ORG 0xB96D0
+POIN WorldMapNodeDataTable
+ORG 0xB9B74
+POIN WorldMapNodeDataTable
+ORG 0xB9CAC
+POIN WorldMapNodeDataTable
+ORG 0xB9D78
+POIN WorldMapNodeDataTable
+ORG 0xB9E3C
+POIN WorldMapNodeDataTable
+ORG 0xBB5D0
+POIN WorldMapNodeDataTable
+ORG 0xBB5E0
+POIN WorldMapNodeDataTable
+ORG 0xBB614
+POIN WorldMapNodeDataTable
+ORG 0xBB66C
+POIN WorldMapNodeDataTable
+ORG 0xBB7F0
+POIN WorldMapNodeDataTable
+ORG 0xBB8D8
+POIN WorldMapNodeDataTable
+ORG 0xBBA48
+POIN WorldMapNodeDataTable
+ORG 0xBC6A0
+POIN WorldMapNodeDataTable
+ORG 0xBC6D8
+POIN WorldMapNodeDataTable
+ORG 0xBC71C
+POIN WorldMapNodeDataTable
+ORG 0xBCF04
+POIN WorldMapNodeDataTable
+ORG 0xBCFB0
+POIN WorldMapNodeDataTable
+ORG 0xBD1E8
+POIN WorldMapNodeDataTable
+ORG 0xBD370
+POIN WorldMapNodeDataTable
+ORG 0xBD3E4
+POIN WorldMapNodeDataTable
+ORG 0xBD5A0
+POIN WorldMapNodeDataTable
+ORG 0xBD9D0
+POIN WorldMapNodeDataTable
+ORG 0xBDA74
+POIN WorldMapNodeDataTable
+ORG 0xBDFA0
+POIN WorldMapNodeDataTable
+ORG 0xBE290
+POIN WorldMapNodeDataTable
+ORG 0xBE3E4
+POIN WorldMapNodeDataTable
+ORG 0xBEA10
+POIN WorldMapNodeDataTable
+ORG 0xBFA44
+POIN WorldMapNodeDataTable
+ORG 0xBFA6C
+POIN WorldMapNodeDataTable
+ORG 0xBFAE0
+POIN WorldMapNodeDataTable
+ORG 0xC1A48
+POIN WorldMapNodeDataTable
+ORG 0xC1B58
+POIN WorldMapNodeDataTable
+ORG 0xC37F8
+POIN WorldMapNodeDataTable
+ORG 0xC3FB0
+POIN WorldMapNodeDataTable
+ORG 0xC3FDC
+POIN WorldMapNodeDataTable
+ORG 0xC4008
+POIN WorldMapNodeDataTable
+ORG 0xB8CBC
+POIN WorldMapNodeDataTable
+ORG 0xB8D2C
+POIN WorldMapNodeDataTable
+
+POP
+
